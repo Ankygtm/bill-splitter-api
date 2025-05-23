@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from app.decorators import jwt_required
 from app.jwt import generate_jwt
 from app.models import UserDevice
 from app.response import ApiResponse
@@ -34,3 +35,10 @@ class Login(APIView):
             token = generate_jwt(UserSerializer(user).data)
             payload = {"token": token, "user": UserSerializer(user).data}
             return ApiResponse.success(payload, "User Logged In Successfully")
+
+
+class GetUser(APIView):
+    @jwt_required
+    def get(self, request):
+        user = UserSerializer(User.objects.get(id=request.jwt_token['id'])).data
+        return ApiResponse.success(user, "User retrieved successfully")

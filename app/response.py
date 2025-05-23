@@ -7,7 +7,7 @@ class ApiResponse:
         final_response = {
             "data": data,
             "message": message,
-            code: code
+            "code": code
         }
         return Response(final_response, status=code)
 
@@ -16,6 +16,6 @@ class ApiResponse:
         final_response = {
             "data": data,
             "message": message,
-            code: code
+            "code": code
         }
         return Response(final_response, status=code)
